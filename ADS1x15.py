@@ -158,26 +158,6 @@ class ADS1x15(object):
     def __del__(self):
         del(self.__i2c) # deletes I2C connection
 
-    def __writeToRegister(self, register, mask, value):
-        current = self.__i2c.read_byte_data(self.__slave, register)  # Get current value
-        new = bitOps.SetValueUnderMask(value, current, mask)
-        self.__i2c.write_byte_data(self.__slave, register, new)
-        
-    def __readFromRegister(self, register, mask):
-        current = self.__i2c.read_byte_data(self.__slave, register)   # Get current value
-        return bitOps.GetValueUnderMask(current, mask)
-
-    def __readFromRegisterWithDictionaryMatch(self, register, mask, dictionary):
-        current = self.__readFromRegister(register, mask)
-        for key in dictionary.keys():
-            if dictionary[key] == current:
-                return key
-            
-    def __writeToRegisterWithDictionaryCheck(self, register, mask, value, dictionary, dictionaryName):    
-        if value not in dictionary.keys():
-            raise Exception('Value ' + str(value) + ' is not in range of: ' + str(dictionaryName))
-        self.__writeToRegister(register, mask, dictionary[value])
-
     def readADCSingleEnded(self, channel=0, pga=6144, sps=250):
         "Gets a single-ended ADC reading from the specified channel in mV. \
         The sample rate for this mode (single-shot) can be used to lower the noise \
