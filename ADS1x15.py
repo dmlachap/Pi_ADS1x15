@@ -224,13 +224,13 @@ class ADS1x15(object):
             # Shift right 4 bits for the 12-bit ADS1015 and convert to mV
             return ( ((result[0] << 8) | (result[1] & 0xFF)) >> 4 )*pga/2048.0
         else:
-        # Return a mV value for the ADS1115
-        # (Take signed values into account as well)
-        val = (result[0] << 8) | (result[1])
-        if val > 0x7FFF:
-            return (val - 0xFFFF)*pga/32768.0
-        else:
-            return ( (result[0] << 8) | (result[1]) )*pga/32768.0
+            # Return a mV value for the ADS1115
+            # (Take signed values into account as well)
+            val = (result[0] << 8) | (result[1])
+            if val > 0x7FFF:
+                return (val - 0xFFFF)*pga/32768.0
+            else:
+                return ( (result[0] << 8) | (result[1]) )*pga/32768.0
     
     def readADCDifferential(self, chP=0, chN=1, pga=6144, sps=250):
         """Gets a differential ADC reading from channels chP and chN in mV.
@@ -300,13 +300,13 @@ class ADS1x15(object):
             val = val - 0xfff
             return val*pga/2048.0
         else:
-        # Return a mV value for the ADS1115
-        # (Take signed values into account as well)
-        val = (result[0] << 8) | (result[1])
-        if val > 0x7FFF:
-            return (val - 0xFFFF)*pga/32768.0
-        else:
-            return ( (result[0] << 8) | (result[1]) )*pga/32768.0
+            # Return a mV value for the ADS1115
+            # (Take signed values into account as well)
+            val = (result[0] << 8) | (result[1])
+            if val > 0x7FFF:
+                return (val - 0xFFFF)*pga/32768.0
+            else:
+                return ( (result[0] << 8) | (result[1]) )*pga/32768.0
   
     def startContinuousConversion(self, channel=0, pga=6144, sps=250): 
         """Starts the continuous conversion mode and returns the first ADC reading
@@ -338,7 +338,7 @@ class ADS1x15(object):
             config |= self.spsADS1015.setdefault(sps, self.__ADS1015_REG_CONFIG_DR_1600SPS)
         else:
             if ( (sps not in self.spsADS1115) & self.debug):    
-        print "ADS1x15: Invalid pga specified: %d, using 6144mV" % sps     
+                print "ADS1x15: Invalid pga specified: %d, using 6144mV" % sps     
             config |= self.spsADS1115.setdefault(sps, self.__ADS1115_REG_CONFIG_DR_250SPS)
       
         # Set PGA/voltage range, defaults to +-6.144V
@@ -379,13 +379,13 @@ class ADS1x15(object):
             # Shift right 4 bits for the 12-bit ADS1015 and convert to mV
             return ( ((result[0] << 8) | (result[1] & 0xFF)) >> 4 )*pga/2048.0
         else:
-        # Return a mV value for the ADS1115
-        # (Take signed values into account as well)
-        val = (result[0] << 8) | (result[1])
-        if val > 0x7FFF:
-            return (val - 0xFFFF)*pga/32768.0
-        else:
-            return ( (result[0] << 8) | (result[1]) )*pga/32768.0  
+            # Return a mV value for the ADS1115
+            # (Take signed values into account as well)
+            val = (result[0] << 8) | (result[1])
+            if val > 0x7FFF:
+                return (val - 0xFFFF)*pga/32768.0
+            else:
+                return ( (result[0] << 8) | (result[1]) )*pga/32768.0  
 
     def startContinuousDifferentialConversion(self, chP=0, chN=1, pga=6144, sps=250): 
         """Starts the continuous differential conversion mode and returns the first ADC reading
@@ -508,7 +508,7 @@ class ADS1x15(object):
         # With invalid channel return -1
         if (channel > 3):
             if (self.debug):
-        print "ADS1x15: Invalid channel specified: %d" % channel
+                print "ADS1x15: Invalid channel specified: %d" % channel
             return -1
         
         # Continuous mode
@@ -656,8 +656,8 @@ class ADS1x15(object):
             config |= self.__ADS1015_REG_CONFIG_MUX_DIFF_1_3  
         else:
             if (self.debug):
-            print "ADS1x15: Invalid channels specified: %d, %d" % (chP, chN)
-        return -1
+                print "ADS1x15: Invalid channels specified: %d, %d" % (chP, chN)
+            return -1
 
         # Set 'start single-conversion' bit to begin conversions
         config |= self.__ADS1015_REG_CONFIG_OS_SINGLE
